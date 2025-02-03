@@ -1,18 +1,18 @@
 "use client";
 
-import EventCard from "@/components/event-card";
+import EventCard from "@/components/event/event-card";
 import Loader from "@/components/loader";
 import { useGetEvents } from "@/hooks/event";
 import { useStep } from "@/store/step";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { data, isLoading, error } = useGetEvents();
+  const { data, isLoading } = useGetEvents();
   const { clear } = useStep();
 
   useEffect(() => {
     clear();
-  }, []);
+  }, [clear]);
 
   return (
     <main className="container mx-auto py-12 px-4">

@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from "next/font/google";
-import Header from "../components/header";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { client } from "@/lib/query";
-import MainLayout from "@/layout/main-layout";
 
-const inter = Inter({ subsets: ["latin"] });
+import MainLayout from "@/layout/main-layout";
 
 export const metadata: Metadata = {
   title: "Create Next App",

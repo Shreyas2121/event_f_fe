@@ -12,6 +12,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     setClient(true);
   }, []);
 
+  console.log(client);
+
   return (
     <QueryClientProvider client={QClient}>
       <body

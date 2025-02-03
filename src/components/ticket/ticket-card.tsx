@@ -1,5 +1,6 @@
 import { TicketC } from "@/lib/types";
 import { Download } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 const TicketCard = ({ ticket }: { ticket: TicketC }) => {
@@ -12,7 +13,7 @@ const TicketCard = ({ ticket }: { ticket: TicketC }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <img
+      <Image
         src={ticket.qr}
         alt="QR Code"
         className="w-48 h-48 rounded-lg border"

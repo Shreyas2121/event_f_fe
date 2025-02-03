@@ -27,3 +27,13 @@ export const contactFormSchema = z
   });
 
 export type ContactForm = z.infer<typeof contactFormSchema>;
+
+export const ticketSchema = z.object({
+  quantity: z
+    .number({ invalid_type_error: "Quantity is required" })
+    .min(1, "At least 1 ticket required"),
+});
+
+export const otpSchema = z.object({
+  otp: z.string().regex(/^\d{6}$/, "OTP must be a 6-digit number"),
+});

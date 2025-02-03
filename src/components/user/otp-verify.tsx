@@ -1,15 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FormError from "./error";
+import FormError from "../error";
 import { useVerifyOTP } from "@/hooks/user";
 import toast from "react-hot-toast";
 import { useStep } from "@/store/step";
-
-const otpSchema = z.object({
-  otp: z.string().regex(/^\d{6}$/, "OTP must be a 6-digit number"),
-});
+import { otpSchema } from "@/lib/zodSchema";
 
 const OTPVerify = () => {
   const otpM = useVerifyOTP();

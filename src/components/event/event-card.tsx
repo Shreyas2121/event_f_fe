@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 
 const EventCard = ({ event }: { event: Event }) => {
-  console.log(event);
   return (
     <div className="card w-96 bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
       <div className="card-body relative">

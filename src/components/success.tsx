@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useStep } from "@/store/step";
-import TicketCard from "./ticket-card";
+import TicketCard from "./ticket/ticket-card";
 
 function Success() {
   const { tickets } = useStep();

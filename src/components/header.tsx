@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/store/user";
 import Link from "next/link";
 import React from "react";
 

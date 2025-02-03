@@ -2,7 +2,7 @@
 
 import FormError from "@/components/error";
 import Loader from "@/components/loader";
-import TicketCard from "@/components/ticket-card";
+import TicketCard from "@/components/ticket/ticket-card";
 import { useGetMyTickets } from "@/hooks/ticket";
 import { ContactForm, contactFormSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,6 +32,7 @@ const Tickets = () => {
   });
 
   const onSubmit = async (data: ContactForm) => {
+    console.log(data);
     refetch();
   };
 

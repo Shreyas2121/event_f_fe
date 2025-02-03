@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FormError from "./error";
+import FormError from "../error";
 import { useCheckContact } from "@/hooks/user";
 import { useStep } from "@/store/step";
 import toast from "react-hot-toast";

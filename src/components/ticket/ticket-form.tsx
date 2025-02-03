@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Event, Ticket, TicketC } from "@/lib/types";
-import FormError from "./error";
+import { Event } from "@/lib/types";
+
 import { formatPrice } from "@/lib/utils";
 import {
   useBuyTickets,
@@ -11,15 +10,9 @@ import {
   useValidateTicket,
 } from "@/hooks/ticket";
 import { useStep } from "@/store/step";
-import { Download } from "lucide-react";
 import toast from "react-hot-toast";
-
-// Validation schema
-const ticketSchema = z.object({
-  quantity: z
-    .number({ invalid_type_error: "Quantity is required" })
-    .min(1, "At least 1 ticket required"),
-});
+import { ticketSchema } from "@/lib/zodSchema";
+import FormError from "../error";
 
 type ZodT = z.infer<typeof ticketSchema>;
 
@@ -33,7 +26,7 @@ const TicketForm = ({ event }: { event: Event }) => {
     register,
     handleSubmit,
     watch,
-    setValue,
+
     formState: { errors },
   } = useForm<ZodT>({
     resolver: zodResolver(ticketSchema),

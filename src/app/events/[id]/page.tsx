@@ -1,13 +1,9 @@
 "use client";
 
 import Loader from "@/components/loader";
-import TicketForm from "@/components/ticket-form";
 import { useGetEvent } from "@/hooks/event";
 import TicketLayout from "@/layout/ticket-layout";
-import { zodResolver } from "@hookform/resolvers/zod";
 import React, { use } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const EventDetails = ({ params }: { params: Promise<{ id: string }> }) => {
   const resolvedParams = use(params);
