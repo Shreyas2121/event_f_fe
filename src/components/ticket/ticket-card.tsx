@@ -16,7 +16,9 @@ const TicketCard = ({ ticket }: { ticket: TicketC }) => {
       <Image
         src={ticket.qr}
         alt="QR Code"
-        className="w-48 h-48 rounded-lg border"
+        height={192}
+        width={192}
+        className="rounded-lg border"
       />
       <div className="text-center">
         <h2 className="text-2xl font-bold">{ticket.event.name}</h2>

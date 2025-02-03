@@ -4,12 +4,15 @@ import FormError from "@/components/error";
 import Loader from "@/components/loader";
 import TicketCard from "@/components/ticket/ticket-card";
 import { useGetMyTickets } from "@/hooks/ticket";
+import { UserTickets } from "@/lib/types";
 import { ContactForm, contactFormSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Tickets = () => {
+  const [tickets, setTickets] = useState<UserTickets[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -26,17 +29,15 @@ const Tickets = () => {
   const email = watch("email");
   const phone = watch("phone");
 
-  const { data, isLoading, refetch } = useGetMyTickets({
-    email,
-    phone,
-  });
+  const ticketsM = useGetMyTickets();
 
   const onSubmit = async (data: ContactForm) => {
-    console.log(data);
-    refetch();
+    ticketsM.mutate(data, {
+      onSuccess: (d) => {
+        setTickets(d);
+      },
+    });
   };
-
-  console.log(data);
 
   return (
     <div className="mt-5">
@@ -78,16 +79,16 @@ const Tickets = () => {
         <button className="btn btn-primary text-white">Search</button>
       </form>
 
-      {isLoading ? (
+      {ticketsM.isPending ? (
         <Loader />
       ) : (
         <>
-          {data &&
-            (data.length === 0 ? (
-              <p>No Tickets Found.</p>
+          {tickets &&
+            (tickets.length === 0 ? (
+              <p className="p-3 font-bold">No Tickets Found.</p>
             ) : (
               <div className="space-y-6">
-                {data.map((ev) => (
+                {tickets.map((ev) => (
                   <div
                     key={ev.id}
                     className="card bg-base-100 shadow-xl p-5 border border-gray-200 rounded-2xl"

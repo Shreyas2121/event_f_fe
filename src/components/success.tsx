@@ -13,7 +13,7 @@ function Success() {
   return (
     <div>
       <h3 className="font-bold text-lg">Your Tickets</h3>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 ">
+      <div className="mt-4 grid gap-3 grid-cols-1 md:grid-cols-2 ">
         {tickets.map((ticket) => (
           <TicketCard ticket={ticket} key={ticket.id} />
         ))}

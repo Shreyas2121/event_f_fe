@@ -3,6 +3,7 @@
 import Loader from "@/components/loader";
 import { useGetEvent } from "@/hooks/event";
 import TicketLayout from "@/layout/ticket-layout";
+import { formatPrice } from "@/lib/utils";
 import React, { use } from "react";
 
 const EventDetails = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -54,8 +55,8 @@ const EventDetails = ({ params }: { params: Promise<{ id: string }> }) => {
                 {event.availableTickets} / {event.totalTickets}
               </p>
               <p>
-                <strong className="text-electric-blue">💸 Price:</strong> $
-                {event.price.toFixed(2)}
+                <strong className="text-electric-blue">💸 Price:</strong>
+                {formatPrice(event.price)}
               </p>
             </div>
           </div>

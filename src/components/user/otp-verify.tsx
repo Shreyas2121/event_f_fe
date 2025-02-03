@@ -10,7 +10,7 @@ import { otpSchema } from "@/lib/zodSchema";
 
 const OTPVerify = () => {
   const otpM = useVerifyOTP();
-  const { setStep } = useStep();
+  const { setStep, updateVerified } = useStep();
 
   const {
     register,
@@ -27,6 +27,7 @@ const OTPVerify = () => {
     otpM.mutate(data.otp, {
       onSuccess: (res) => {
         if (res.verified) {
+          updateVerified();
           toast.success(res.message);
           setStep(3);
         }

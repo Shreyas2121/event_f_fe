@@ -1,7 +1,7 @@
 import { API } from "@/lib/axios";
 import { QUERY_KEYS } from "@/lib/constants";
 import { Payment, TicketC, UserTickets } from "@/lib/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useValidateTicket = () => {
   return useMutation({
@@ -22,18 +22,23 @@ export const useProcessPayment = () => {
 };
 
 export const useBuyTickets = () => {
+  const client = useQueryClient();
   return useMutation({
     mutationFn: async (ticketsData: any) => {
       const { data } = await API.post("/tickets/buy", ticketsData);
       return data.data as TicketC[];
     },
+    onSuccess: (data) => {
+      client.invalidateQueries({
+        queryKey: [QUERY_KEYS.events.single, data[0].event.id],
+      });
+    },
   });
 };
 
-export const useGetMyTickets = (contactData: any) => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.tickets.user],
-    queryFn: async () => {
+export const useGetMyTickets = () => {
+  return useMutation({
+    mutationFn: async (contactData: any) => {
       const { data } = await API.get("/tickets", {
         params: {
           email: contactData.email,
@@ -42,6 +47,5 @@ export const useGetMyTickets = (contactData: any) => {
       });
       return data.data as UserTickets[];
     },
-    enabled: false,
   });
 };

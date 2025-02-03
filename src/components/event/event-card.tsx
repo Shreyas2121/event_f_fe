@@ -29,7 +29,12 @@ const EventCard = ({ event }: { event: Event }) => {
             } transition-colors duration-300`}
             disabled={event.availableTickets === 0}
           >
-            <Link href={`/events/${event.id}`}>View Details</Link>
+            <Link
+              href={`/events/${event.id}`}
+              className="block w-full h-full flex items-center justify-center"
+            >
+              View Details
+            </Link>
           </button>
         </div>
       </div>

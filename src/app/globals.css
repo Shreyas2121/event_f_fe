@@ -8,23 +8,22 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px; /* Width of the scrollbar */
-  height: 8px; /* For horizontal scrollbars */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Track color */
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #ec4899; /* Vibrant pink (Tailwind’s pink-500) */
+*::-webkit-scrollbar-thumb {
+  background: #ec4899;
   border-radius: 10px;
-  border: 2px solid #f1f1f1; /* Adds spacing around the thumb */
+  border: 2px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #db2777; /* Darker pink on hover */
+  background: #db2777;
 }

@@ -7,6 +7,7 @@ interface StepState {
   setStep: (step: number) => void;
   user: User | null;
   setUser: (user: User | null) => void;
+  updateVerified: () => void;
   clear: () => void;
   tickets: TicketC[];
   setTickets: (ticket: TicketC[]) => void;
@@ -14,7 +15,7 @@ interface StepState {
 
 export const useStep = create<StepState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       step: 1,
       setStep: (step) => set({ step }),
       user: null,
@@ -27,6 +28,17 @@ export const useStep = create<StepState>()(
           user: null,
           tickets: [],
         }),
+      updateVerified: () => {
+        const { user } = get();
+        if (user) {
+          set({
+            user: {
+              ...user,
+              verified: true,
+            },
+          });
+        }
+      },
     }),
     {
       name: "step-storage",
