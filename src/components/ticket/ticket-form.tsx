@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +9,7 @@ import { formatPrice } from "@/lib/utils";
 import {
   useBuyTickets,
   useProcessPayment,
+  useValidatePayment,
   useValidateTicket,
 } from "@/hooks/ticket";
 import { useStep } from "@/store/step";
@@ -20,6 +23,7 @@ const TicketForm = ({ event }: { event: Event }) => {
   const { user, setTickets, setStep, setUser } = useStep();
   const validateM = useValidateTicket();
   const paymentM = useProcessPayment();
+  const validatePaymentM = useValidatePayment();
   const ticketM = useBuyTickets();
 
   const {
@@ -44,24 +48,42 @@ const TicketForm = ({ event }: { event: Event }) => {
       quantity: data.quantity,
     };
     await validateM.mutateAsync(obj);
-    const payment = await paymentM.mutateAsync({
+    const paymentRes = await paymentM.mutateAsync({
       amount: quantity * event.price,
       userId: user?.id,
-      eventId: event.id,
+      eId: event.id,
     });
 
-    const newObj = {
-      ...obj,
-      paymentId: payment.id,
-    };
-    await ticketM.mutateAsync(newObj, {
-      onSuccess: (tickets) => {
-        toast.success("Tickets booked successfully");
-        setTickets(tickets);
-        setUser(null);
-        setStep(4);
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
+      amount: paymentRes.order.amount,
+      order_id: paymentRes.order.id,
+
+      handler: async (response: any) => {
+        await validatePaymentM.mutateAsync({
+          ...response,
+          paymentId: paymentRes.paymentInfo.id,
+        });
+
+        toast.success("Payment successful");
+
+        const newObj = {
+          ...obj,
+          paymentId: paymentRes.paymentInfo.id,
+        };
+        await ticketM.mutateAsync(newObj, {
+          onSuccess: (tickets) => {
+            toast.success("Tickets booked successfully");
+            setTickets(tickets);
+            setUser(null);
+            setStep(4);
+          },
+        });
       },
-    });
+    };
+
+    const rz = new (window as any).Razorpay(options);
+    rz.open();
   };
 
   return (
@@ -96,7 +118,8 @@ const TicketForm = ({ event }: { event: Event }) => {
             event.availableTickets === 0 ||
             validateM.isPending ||
             paymentM.isPending ||
-            ticketM.isPending
+            ticketM.isPending ||
+            validatePaymentM.isPending
           }
         >
           Buy Tickets Now

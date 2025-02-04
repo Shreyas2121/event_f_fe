@@ -15,6 +15,7 @@ const ContactForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(contactFormSchema),
@@ -23,6 +24,9 @@ const ContactForm = () => {
       phone: "",
     },
   });
+
+  const email = watch("email");
+  const phone = watch("phone");
 
   const onSubmit = async (data: z.infer<typeof contactFormSchema>) => {
     const res = await contactM.mutateAsync(data);
@@ -44,6 +48,7 @@ const ContactForm = () => {
             type="email"
             {...register("email")}
             className="grow"
+            disabled={phone ? true : false}
             placeholder="Enter your email"
           />
         </label>
@@ -57,6 +62,7 @@ const ContactForm = () => {
             type="text"
             {...register("phone")}
             className="grow"
+            disabled={email ? true : false}
             placeholder="Enter your phone number"
           />
         </label>

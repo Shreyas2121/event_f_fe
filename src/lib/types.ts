@@ -21,14 +21,17 @@ export interface User {
 }
 
 export interface Payment {
+  amount: number;
+  userId: number;
+  status: "success" | "failed" | "pending";
   id: number;
   createdAt: Date;
   updatedAt: Date;
   eventId: number;
-  userId: number;
-  amount: number;
   paymentDate: Date;
-  status: "success" | "failed";
+  razorpayOrderId: string | null;
+  razorpayPaymentId: string | null;
+  razorpaySignature: string | null;
 }
 
 export interface Ticket {

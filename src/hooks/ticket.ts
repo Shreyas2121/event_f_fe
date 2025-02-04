@@ -15,8 +15,23 @@ export const useValidateTicket = () => {
 export const useProcessPayment = () => {
   return useMutation({
     mutationFn: async (paymentData: any) => {
-      const { data } = await API.post("/payments/process", paymentData);
-      return data.data as Payment;
+      const { data } = await API.post(
+        "/payments/initiateRazorpay",
+        paymentData
+      );
+      return data.data as {
+        order: any;
+        paymentInfo: Payment;
+      };
+    },
+  });
+};
+
+export const useValidatePayment = () => {
+  return useMutation({
+    mutationFn: async (paymentData: any) => {
+      const { data } = await API.post("/payments/validate", paymentData);
+      return data.message as string;
     },
   });
 };
